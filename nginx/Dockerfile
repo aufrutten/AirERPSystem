@@ -11,7 +11,6 @@ ENV OPENSSL_CONFIG="/etc/nginx/ssl/openssl.cnf"
 RUN rm /etc/nginx/conf.d/default.conf
 
 # Copying the configs
-RUN mkdir /app/
 COPY ./prod/ /etc/nginx/templates/
 COPY ./nginx.conf /etc/nginx/nginx.conf
 COPY ./ssl/openssl.cnf ${OPENSSL_CONFIG}
