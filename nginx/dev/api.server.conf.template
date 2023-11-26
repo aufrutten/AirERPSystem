@@ -36,7 +36,7 @@ server {
     }
 
     location /static/ {
-      alias /app/backend;
+      alias /app/backend/;
     }
 
     include /etc/nginx/mime.types;
