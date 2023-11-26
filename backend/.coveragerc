@@ -1,0 +1,10 @@
+
+[run]
+source = ./
+omit = backend/settings.py, backend/test_settings.py, apps/*/migrations/*
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __str__
+    if __name__ == .__main__.:

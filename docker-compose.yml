@@ -1,0 +1,78 @@
+version: "3.8"
+
+services:
+  redis-svc.developing:
+    image: redis
+    container_name: redis
+    restart: unless-stopped
+
+  postgres-svc:
+    image: postgres
+    container_name: postgres
+    restart: unless-stopped
+    env_file:
+      - private.env
+    ports:
+      - "5432:5432"
+
+  celery-svc:
+    build:
+      context: ./backend
+    container_name: celery
+    restart: unless-stopped
+    env_file:
+      - private.env
+      - public.env
+    environment:
+      DEBUG: 1
+    volumes:
+      - ./backend:/app
+    command: sh -c /app/scripts/celery_worker_entrypoint.sh
+
+  backend-svc:
+    build:
+      context: ./backend
+    container_name: backend
+    restart: unless-stopped
+    env_file:
+      - private.env
+      - public.env
+    environment:
+      DEBUG: 1
+    volumes:
+      - html-backend:/app/staticfiles
+      - ./backend:/app
+
+  frontend-svc:
+    build:
+      context: ./frontend
+    container_name: frontend
+    restart: unless-stopped
+    env_file:
+      - public.env
+    environment:
+      DEBUG: 1
+    volumes:
+      - html-frontend:/app/dist
+      - ./frontend:/app
+
+  nginx-svc:
+    build:
+      context: ./nginx
+    container_name: nginx
+    restart: unless-stopped
+    env_file:
+      - public.env
+    environment:
+      DEBUG: 1
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - html-backend:/app/backend:ro
+      - html-frontend:/app/frontend:ro
+      - ./nginx/dev:/etc/nginx/templates:ro
+
+volumes:
+  html-backend:
+  html-frontend:

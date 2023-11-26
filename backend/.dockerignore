@@ -1,0 +1,12 @@
+*.DS_Store
+*.idea
+
+venv
+staticfiles
+uploads
+
+*.pyc
+
+*__pycache__*
+.coverage
+htmlcov

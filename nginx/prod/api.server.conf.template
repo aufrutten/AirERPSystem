@@ -1,0 +1,12 @@
+
+server {
+    listen                                 80;
+    listen                            [::]:80;
+    server_name               ${BACKEND_HOST};
+
+    location /static/ {
+        alias /app/backend/;
+    }
+
+    include /etc/nginx/mime.types;
+}

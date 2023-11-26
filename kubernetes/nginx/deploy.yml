@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx-container
+          image: ${DOCKER_USERNAME}/${DOCKER_IMAGE}-nginx:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: app-public-config
+          volumeMounts:
+            - mountPath: /app/backend
+              name: html-backend
+              readOnly: true
+            - mountPath: /app/frontend
+              name: html-frontend
+              readOnly: true
+      volumes:
+        - name: html-backend
+          persistentVolumeClaim:
+            claimName: backend-pvc
+        - name: html-frontend
+          persistentVolumeClaim:
+            claimName: frontend-pvc

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: celery-beat-deployment
+  namespace: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: celery-beat
+  template:
+    metadata:
+      labels:
+        app: celery-beat
+    spec:
+      containers:
+        - name: celery-beat-container
+          image: ${DOCKER_USERNAME}/${DOCKER_IMAGE}-backend:latest
+          imagePullPolicy: Always
+          command:
+            - "/bin/sh"
+            - "-c"
+            - "/app/scripts/celery_beat_entrypoint.sh"
+          envFrom:
+            - secretRef:
+                name: app-secret-config
+            - configMapRef:
+                name: app-public-config

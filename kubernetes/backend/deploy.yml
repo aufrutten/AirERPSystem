@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  namespace: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend-container
+          image: ${DOCKER_USERNAME}/${DOCKER_IMAGE}-backend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          envFrom:
+            - secretRef:
+                name: app-secret-config
+            - configMapRef:
+                name: app-public-config
+          volumeMounts:
+            - mountPath: /app/staticfiles
+              name: html-backend
+      volumes:
+        - name: html-backend
+          persistentVolumeClaim:
+            claimName: backend-pvc
