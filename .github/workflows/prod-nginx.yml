@@ -64,4 +64,5 @@ jobs:
 
       - name: Deploy to Kubernetes
         run: |
-          kubectl set image deployment/nginx-deployment nginx-container=${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}-nginx:${{ env.NOW }} -n production
+          kubectl set image deployment/backend-deployment nginx-container=${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}-nginx:${{ env.NOW }} -n production
+          kubectl set image deployment/frontend-deployment nginx-container=${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}-nginx:${{ env.NOW }} -n production

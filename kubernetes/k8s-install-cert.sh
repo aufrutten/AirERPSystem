@@ -63,7 +63,6 @@ kubectl apply -f "${TMP_PATH}/nginx-ingress.yml"
 visual_sleep 300
 
 kubectl get certificates -n production
-kubectl rollout restart deployment nginx-deployment -n production
 kubectl rollout restart deployment cert-manager --namespace cert-manager
 kubectl rollout restart deployment ingress-nginx-controller --namespace ingress-nginx
 

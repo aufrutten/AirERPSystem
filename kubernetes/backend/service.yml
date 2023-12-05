@@ -5,6 +5,19 @@ metadata:
   namespace: production
 spec:
   ports:
+    - port: 8080
+  selector:
+    app: backend
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-static-svc
+  namespace: production
+spec:
+  ports:
     - port: 80
   selector:
     app: backend

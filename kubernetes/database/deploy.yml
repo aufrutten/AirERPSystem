@@ -13,6 +13,11 @@ spec:
       labels:
         app: postgres
     spec:
+      volumes:
+        - name: database-data
+          persistentVolumeClaim:
+            claimName: database-pvc
+
       containers:
         - name: postgres-container
           image: postgres
@@ -24,7 +29,3 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/postgres/data
               name: database-data
-      volumes:
-        - name: database-data
-          persistentVolumeClaim:
-            claimName: database-pvc

@@ -61,7 +61,6 @@ envsubst < "./celery/worker/deploy.yml" > "${TMP_PATH}/celery-worker-deploy.yml"
 envsubst < "./celery/beat/deploy.yml" > "${TMP_PATH}/celery-beat-deploy.yml"
 envsubst < "./frontend/deploy.yml" > "${TMP_PATH}/frontend-deploy.yml"
 envsubst < "./backend/deploy.yml" > "${TMP_PATH}/backend-deploy.yml"
-envsubst < "./nginx/deploy.yml" > "${TMP_PATH}/nginx-deploy.yml"
 
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.2/deploy/static/provider/cloud/deploy.yaml
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.13.2/cert-manager.yaml
@@ -78,21 +77,16 @@ kubectl apply -f database/volume.yml
 kubectl apply -f database/deploy.yml
 kubectl apply -f database/service.yml
 
-kubectl apply -f backend/volume.yml
 kubectl apply -f "${TMP_PATH}/backend-deploy.yml"
 kubectl apply -f backend/service.yml
 
-kubectl apply -f frontend/volume.yml
 kubectl apply -f "${TMP_PATH}/frontend-deploy.yml"
+kubectl apply -f frontend/service.yml
 
 kubectl apply -f "${TMP_PATH}/celery-beat-deploy.yml"
 kubectl apply -f "${TMP_PATH}/celery-worker-deploy.yml"
 
-visual_sleep 200
-
-kubectl apply -f "${TMP_PATH}/nginx-deploy.yml"
-kubectl apply -f nginx/service.yml
-
+rm -rf "${TMP_PATH}"
 visual_sleep 350
 
 IP=$(kubectl get svc -n ingress-nginx ingress-nginx-controller -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')
@@ -106,4 +100,4 @@ echo "$FRONTEND_HOST - $IP"
 echo "==================================================================================================="
 echo "After configure the DNS, launch the k8s-install-cert.sh, this is for HTTPS and Ingress in app"
 
-rm -rf "${TMP_PATH}"
+

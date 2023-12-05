@@ -13,12 +13,16 @@ spec:
       labels:
         app: backend
     spec:
+      volumes:
+        - name: html-backend
+          emptyDir: {}
+
       containers:
         - name: backend-container
           image: ${DOCKER_USERNAME}/${DOCKER_IMAGE}-backend:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 80
+            - containerPort: 8080
           envFrom:
             - secretRef:
                 name: app-secret-config
@@ -27,7 +31,16 @@ spec:
           volumeMounts:
             - mountPath: /app/staticfiles
               name: html-backend
-      volumes:
-        - name: html-backend
-          persistentVolumeClaim:
-            claimName: backend-pvc
+
+        - name: nginx-container
+          image: ${DOCKER_USERNAME}/${DOCKER_IMAGE}-nginx:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: app-public-config
+          volumeMounts:
+            - mountPath: /app/backend
+              name: html-backend
+              readOnly: true

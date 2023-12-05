@@ -1,29 +1,11 @@
 apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: database-pv
-spec:
-  capacity:
-    storage: 10Gi
-  accessModes:
-    - ReadWriteMany
-  storageClassName: hostpath
-  hostPath:
-    path: "/data/database/postgres"
-
----
-
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: database-pvc
   namespace: production
 spec:
-  volumeName: database-pv
-  storageClassName: hostpath
-  volumeMode: Filesystem
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi
+      storage: 20Gi
