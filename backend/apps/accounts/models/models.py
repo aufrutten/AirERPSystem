@@ -46,9 +46,9 @@ class User(AbstractUser):
 
     username = None
     email = fields.EmailField(_("Email address"))
-    password = models.CharField(_("password"), max_length=128)
-    last_login = models.DateTimeField(_("last login"), blank=True, null=True, editable=False)
-    date_joined = models.DateTimeField(_("date joined"), default=timezone.now, editable=False)
+    password = models.CharField(_("Password"), max_length=128)
+    last_login = models.DateTimeField(_("Last login"), blank=True, null=True, editable=False)
+    date_joined = models.DateTimeField(_("Date joined"), default=timezone.now, editable=False)
 
     photo = fields.CloudinaryField(_("Photo profile"))
     first_name = fields.TitleCharField(_("First name"))

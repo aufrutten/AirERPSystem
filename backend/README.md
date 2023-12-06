@@ -37,7 +37,7 @@ pip3 freeze > ./requirements.txt
 ```
 
 ### For coverage tests
-#### Each commit must be coverage by 95~100% test
+#### Each commit must be coverage by 95~100% test and wrote localization
 
 ```sh
 chmod -R +x ./scripts && ./scripts/coverage.sh
