@@ -9,6 +9,8 @@ server {
     }
 
     location / {
+        expires 15d;
+        add_header Cache-Control "public, max-age=1296000";
         root      /app/frontend/;
         index     index.html;
         try_files $uri $uri/ /index.html;

@@ -5,6 +5,8 @@ server {
     server_name               ${BACKEND_HOST};
 
     location /static/ {
+        expires 15d;
+        add_header Cache-Control "public, max-age=1296000";
         alias /app/backend/;
     }
 
