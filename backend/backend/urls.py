@@ -14,22 +14,11 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path, include
-from django.shortcuts import reverse
-from django.http import HttpResponse
+from django.shortcuts import render
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
-
-
-def choose_api_view(request):
-    html = f"""
-    <div style="display: flex; justify-content: center; align-items: center; text-align: center; min-height: 100vh">
-    <a href='{reverse('redoc')}' style='margin-right: 5%'>Redoc</a>
-    <br><br>
-    <a href='{reverse('swagger-ui')}'>Swagger</a>
-    </div>
-    """
-    return HttpResponse(html)
 
 
 # DEFAULTS
@@ -38,15 +27,16 @@ urlpatterns = [
     path('health-check/', include('health_check.urls', namespace="health_check")),
 ]
 
-# APPS
-urlpatterns += [
-    path('accounts/', include('apps.accounts.urls', namespace='accounts')),
-]
 
 # SWAGGER API
 urlpatterns += [
-    path('', choose_api_view),
+    path('', lambda request: render(request, "backend/APIMainMenu.html")),
     path('schema', SpectacularAPIView.as_view(), name='schema'),
     path('redoc', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
     path('swagger', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+]
+
+# APPS
+urlpatterns += [
+    path('accounts/', include('apps.accounts.urls', namespace='accounts')),
 ]
