@@ -39,4 +39,5 @@ urlpatterns += [
 # APPS
 urlpatterns += [
     path('accounts/', include('apps.accounts.urls', namespace='accounts')),
+    path('airports/', include('apps.airports.urls', namespace='airports')),
 ]
