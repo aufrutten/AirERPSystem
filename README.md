@@ -117,8 +117,8 @@ docker-compose up
 > Dev domain is indicated in public.env
 
 ```
-API - api.server.local
+API - api.localhost
 
-UI/UX - server.local
+UI/UX - localhost
 ```
  
