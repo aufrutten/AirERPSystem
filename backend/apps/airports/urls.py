@@ -24,7 +24,7 @@ app_name = 'airports'
 
 router = DefaultRouter()
 
-router.register(r'', views.AirportsView, basename='test')
+router.register(r'', views.AirportView, basename='airport')
 
 
 urlpatterns = [

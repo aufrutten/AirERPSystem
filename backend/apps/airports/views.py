@@ -8,7 +8,7 @@ from rest_framework.viewsets import ReadOnlyModelViewSet
 from . import models, serializers, filters
 
 
-class AirportsView(ReadOnlyModelViewSet):
+class AirportView(ReadOnlyModelViewSet):
     queryset = models.Airport.objects.all()
     serializer_class = serializers.AirportSerializer
     permission_classes = [permissions.AllowAny]
