@@ -1,4 +1,3 @@
-
 from django.contrib import admin
 
 from . import models
@@ -6,7 +5,6 @@ from . import models
 
 @admin.register(models.User)
 class UserAdmin(admin.ModelAdmin):
-
     search_fields = ('email', 'first_name', 'last_name', 'birthday')
     search_help_text = "Search fields: email, name, surname, birthday"
 
@@ -18,7 +16,7 @@ class UserAdmin(admin.ModelAdmin):
     def get_readonly_fields(self, request, obj=None):
         if obj is None:
             return ()
-        return 'email', 'last_login', 'date_joined', 'latest_token_update'
+        return 'email', 'last_login', 'date_joined'
 
     def get_fieldsets(self, request, obj=None):
         if obj is None:
@@ -27,5 +25,5 @@ class UserAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if not change:
-            models.User.objects.create_user(**form.cleaned_data)
-        super().save_model(request, obj, form, change)
+            return models.User.objects.create_user(**form.cleaned_data)
+        return super().save_model(request, obj, form, change)

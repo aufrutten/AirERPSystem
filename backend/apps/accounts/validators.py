@@ -9,9 +9,9 @@ from django.core.exceptions import ValidationError
 
 def validate_email(value: str) -> str:
     """Controlling if email available for use, is not busy"""
-    if get_user_model().objects.filter(email=value).exists():
+    if get_user_model().objects.filter(email=value.lower().strip()).exists():
         raise ValidationError(_("Sorry, but this email address is already linked to another account."))
-    return value.lower()
+    return value.lower().strip()
 
 
 def validate_birthday(value):

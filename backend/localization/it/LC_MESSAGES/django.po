@@ -1,0 +1,231 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-24 10:45+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: apps/accounts/models/user.py:43
+msgid "Male"
+msgstr "Maschio"
+
+#: apps/accounts/models/user.py:44
+msgid "Female"
+msgstr "Femmina"
+
+#: apps/accounts/models/user.py:55 apps/accounts/serializers/OAuth2.py:17
+#: apps/accounts/serializers/serializers.py:20
+msgid "Email address"
+msgstr "Indirizzo email"
+
+#: apps/accounts/models/user.py:56 apps/accounts/serializers/auth.py:13
+#: apps/accounts/serializers/serializers.py:50
+msgid "Password"
+msgstr "Password"
+
+#: apps/accounts/models/user.py:57
+msgid "Last login"
+msgstr "Ultimo accesso"
+
+#: apps/accounts/models/user.py:58
+msgid "Date joined"
+msgstr "Data "
+
+#: apps/accounts/models/user.py:59
+msgid "Last password update"
+msgstr "Ultimo "
+
+#: apps/accounts/models/user.py:60
+msgid "Last email received"
+msgstr "Ultima email ricevuta"
+
+#: apps/accounts/models/user.py:62
+msgid "Photo profile"
+msgstr "Foto profilo"
+
+#: apps/accounts/models/user.py:63
+msgid "First name"
+msgstr "Nome"
+
+#: apps/accounts/models/user.py:64
+msgid "Last name"
+msgstr "Cognome"
+
+#: apps/accounts/models/user.py:65
+msgid "Birthday"
+msgstr "Data di nascita"
+
+#: apps/accounts/models/user.py:66
+msgid "Sex"
+msgstr "Sesso"
+
+#: apps/accounts/models/user.py:97
+msgid "{} Confirm email ownership"
+msgstr "{} Conferma la tua email"
+
+#: apps/accounts/models/user.py:104
+msgid "{} Reset your password"
+msgstr "{} Cambia la tua password"
+
+#: apps/accounts/serializers/OAuth2.py:18
+#: apps/accounts/serializers/serializers.py:91
+msgid "Access token"
+msgstr "Token di accesso"
+
+#: apps/accounts/serializers/OAuth2.py:19
+msgid "Access token from social provider"
+msgstr "Token di accesso dal social provider"
+
+#: apps/accounts/serializers/OAuth2.py:33
+msgid "Client id"
+msgstr "Id del cliente"
+
+#: apps/accounts/serializers/OAuth2.py:33
+msgid "Client id of app"
+msgstr "Id del cliente del applicazione"
+
+#: apps/accounts/serializers/auth.py:19
+msgid "The password you provided is incorrect"
+msgstr "La password inserita è errata"
+
+#: apps/accounts/serializers/serializers.py:27
+msgid "Unfortunately, the email address you provided was not found"
+msgstr "Sfortunatamente, l'indirizzo email inserito non è stato trovato"
+
+#: apps/accounts/serializers/serializers.py:30
+msgid "Account is not yet activated, please confirm your email"
+msgstr "Account non è ancora stato attivato, per favore conferma la tua email"
+
+#: apps/accounts/serializers/serializers.py:42
+msgid ""
+"Cannot send reset link too frequently. Check your email or wait before "
+"requesting another one."
+msgstr ""
+
+#: apps/accounts/serializers/serializers.py:66
+msgid "User ID"
+msgstr ""
+
+#: apps/accounts/serializers/serializers.py:74
+msgid "Invalid user ID"
+msgstr ""
+
+#: apps/accounts/serializers/serializers.py:80
+msgid "Token"
+msgstr ""
+
+#: apps/accounts/serializers/serializers.py:85
+msgid "Invalid token"
+msgstr ""
+
+#: apps/accounts/serializers/serializers.py:92
+msgid "Refresh token"
+msgstr ""
+
+#: apps/accounts/validators.py:13
+msgid "Sorry, but this email address is already linked to another account."
+msgstr ""
+
+#: apps/accounts/validators.py:22
+msgid "Your age is below the minimum required {} year olds."
+msgstr ""
+
+#: apps/accounts/validators.py:24
+msgid "Sorry, but you need to be under the age of {} year olds."
+msgstr ""
+
+#: apps/aircrafts/models.py:12
+msgid "In Service"
+msgstr ""
+
+#: apps/aircrafts/models.py:13
+msgid "Out of Service"
+msgstr ""
+
+#: apps/aircrafts/models.py:14
+msgid "In Maintenance"
+msgstr ""
+
+#: apps/aircrafts/models.py:20
+msgid "Registration number"
+msgstr ""
+
+#: apps/aircrafts/models.py:21
+msgid "Model"
+msgstr ""
+
+#: apps/aircrafts/models.py:22
+msgid "Capacity"
+msgstr ""
+
+#: apps/aircrafts/models.py:23
+msgid "Manufacture year"
+msgstr ""
+
+#: apps/airports/models/continent.py:7
+msgid "Africa"
+msgstr ""
+
+#: apps/airports/models/continent.py:8
+msgid "Antarctica"
+msgstr ""
+
+#: apps/airports/models/continent.py:9
+msgid "Asia"
+msgstr ""
+
+#: apps/airports/models/continent.py:10
+msgid "Europe"
+msgstr ""
+
+#: apps/airports/models/continent.py:11
+msgid "North America"
+msgstr ""
+
+#: apps/airports/models/continent.py:12
+msgid "South America"
+msgstr ""
+
+#: apps/airports/models/continent.py:13
+msgid "Oceania"
+msgstr ""
+
+#: apps/airports/models/country.py:11
+msgid "Country code"
+msgstr ""
+
+#: apps/airports/models/country.py:12
+msgid "Country name"
+msgstr ""
+
+#: apps/airports/models/country.py:13 apps/airports/models/regions.py:15
+msgid "Continent"
+msgstr ""
+
+#: apps/airports/models/country.py:15
+msgid "Wikipedia link"
+msgstr ""
+
+#: apps/airports/models/country.py:16
+msgid "Keywords"
+msgstr ""
+
+#: backend/components/OAuth2/backends.py:53
+msgid "Invalid read extract date of birth from google account"
+msgstr ""
+
+#: backend/components/OAuth2/backends.py:61
+msgid "Invalid read extract sex from google account"
+msgstr ""

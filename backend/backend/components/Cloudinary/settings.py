@@ -1,11 +1,15 @@
-from os import environ
-
 import cloudinary
+from decouple import config
+from django.conf import settings
 
-# Cloudinary
-cloudinary.config(
-    cloud_name=environ.get('CLOUD_NAME'),
-    api_key=environ.get('CLOUD_API_KEY'),
-    api_secret=environ.get('CLOUD_API_SECRET'),
-    secure=True
-)
+# Default: DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+if not settings.DEBUG:  # pragma: no cover
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+    # Cloudinary
+    cloudinary.config(
+        cloud_name=config('CLOUD_NAME', cast=str),
+        api_key=config('CLOUD_API_KEY', cast=str),
+        api_secret=config('CLOUD_API_SECRET', cast=str),
+        secure=True
+    )

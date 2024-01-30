@@ -1,10 +1,11 @@
 
 [run]
 source = ./
-omit = backend/settings.py, backend/test_settings.py, apps/*/migrations/*
+omit = backend/settings.py, backend/test_settings.py, apps/*/migrations/*, manage.py, backend/wsgi.py, backend/asgi.py
 
 [report]
 exclude_lines =
     pragma: no cover
     def __str__
     if __name__ == .__main__.:
+    if TYPE_CHECKING:

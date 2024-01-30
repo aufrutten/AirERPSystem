@@ -4,13 +4,13 @@ import {onMounted, ref } from "vue";
 import ForgotPasswordForm from "@/components/forms/ForgotPasswordForm.vue";
 import NewPasswordForm from "@/components/forms/NewPasswordForm.vue";
 
-const email = ref('')
-const accessToken = ref('')
+const uid = ref('')
+const token = ref('')
 
 onMounted(() => {
   const urlParams = new URLSearchParams(window.location.search);
-  email.value = urlParams.get('email') || '';
-  accessToken.value = urlParams.get('access_token') || '';
+  uid.value = urlParams.get('uid') || '';
+  token.value = urlParams.get('token') || '';
 })
 
 </script>
@@ -23,8 +23,8 @@ onMounted(() => {
         <router-link :to="{name: 'login'}" class="btn-close"></router-link>
       </div>
       <div class="modal-body p-5 pt-0">
-        <ForgotPasswordForm v-if="!accessToken" />
-        <NewPasswordForm v-else :email="email" :accessToken="accessToken"/>
+        <ForgotPasswordForm v-if="!token" />
+        <NewPasswordForm v-else :uid="uid" :token="token"/>
       </div>
     </div>
   </div>

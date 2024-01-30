@@ -36,7 +36,7 @@ export const accountData = defineStore('account', () => {
       window.api.defaults.headers.common['Authorization'] = ''
     }
 
-    window.api.get("/accounts/logout")
+    window.api.delete("/accounts/auth")
       .then(() => {logout()})
       .catch(() => {logout()})
       .finally(() => {

@@ -21,7 +21,7 @@ const isDark: boolean = getTheme() === 'dark'
 
 function signInWithGoogle() {
   // Redirect the user to the Google OAuth2 authorization URL
-  window.api.get("/accounts/login/social/google-oauth2")
+  window.api.get("/accounts/auth/google-oauth2")
       .then((response: AxiosResponse) => {
         const client_id = response.data['client_id']
         window.location.href = `${google_auth_uri}?client_id=${client_id}&access_type=online&redirect_uri=${google_redirect_uri}&response_type=token&scope=openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/user.birthday.read https://www.googleapis.com/auth/user.gender.read`;

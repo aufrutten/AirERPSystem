@@ -10,3 +10,6 @@ import ThemeButton from "@/components/ThemeButton.vue";
   <Header />
   <RouterView />
 </template>
+
+<style scoped>
+</style>

@@ -61,11 +61,11 @@ class GoogleOAuth2(google.GoogleOAuth2, ABC):
             raise serializers.ValidationError(_('Invalid read extract sex from google account'))
 
 
-class AppleIdAuth(apple.AppleIdAuth, ABC):
+# class AppleIdAuth(apple.AppleIdAuth, ABC):
     # TODO: Add auth by Apple
-    pass
+    # pass
 
 
-class FacebookOAuth2(facebook.FacebookOAuth2, ABC):
+# class FacebookOAuth2(facebook.FacebookOAuth2, ABC):
     # TODO: Add auth by Facebook
-    pass
+    # pass

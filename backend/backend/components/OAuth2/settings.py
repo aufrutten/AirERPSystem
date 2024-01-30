@@ -1,4 +1,4 @@
-from os import environ
+from decouple import config
 
 AUTHENTICATION_BACKENDS = (
     # 'backend.components.OAuth2.backends.AppleIdAuth',
@@ -19,10 +19,10 @@ SOCIAL_AUTH_PIPELINE = (
 )
 
 # URL NAMESPACES
-LOGIN_URL = 'accounts:login'
+LOGIN_URL = 'accounts:auth'
 LOGIN_REDIRECT_URL = 'accounts:me'
-LOGOUT_URL = 'accounts:logout'
-LOGOUT_REDIRECT_URL = 'accounts:login'
+LOGOUT_URL = 'accounts:auth'
+LOGOUT_REDIRECT_URL = 'accounts:auth'
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
 
@@ -30,13 +30,11 @@ AUTH_USER_MODEL = 'accounts.User'
 AUTH_PROFILE_MODULE = 'accounts.User'
 SOCIAL_AUTH_USER_MODEL = 'accounts.User'
 
-
 # Allow to create user by social django
 SOCIAL_AUTH_CREATE_USERS = True
 SOCIAL_AUTH_EMAIL_AS_USERNAME = True
 SOCIAL_AUTH_JSONFIELD_ENABLED = True
 SOCIAL_AUTH_USER_FIELDS = ['first_name', 'last_name', 'email', 'photo', 'birthday', 'sex', 'is_active']
-
 
 # =================================================================================================== #
 # ===============                       CONFIGURATION                   ============================= #
@@ -50,9 +48,14 @@ SOCIAL_AUTH_USER_FIELDS = ['first_name', 'last_name', 'email', 'photo', 'birthda
 # SOCIAL_AUTH_APPLE_ID_SECRET = ''
 
 # Google
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = environ.get('GOOGLE_CLIENT_ID', '')
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = environ.get('GOOGLE_CLIENT_SECRET', '')
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config("GOOGLE_CLIENT_ID", default="", cast=str)
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config("GOOGLE_CLIENT_SECRET", default="", cast=str)
 
 # Facebook
 # SOCIAL_AUTH_FACEBOOK_KEY = ''
 # SOCIAL_AUTH_FACEBOOK_SECRET = ''
+
+# For each new inserted backend, do test for availability (It uses for API authentication)
+AVAILABLE_OAUTH_BACKENDS_IN_API = {
+    'google-oauth2': SOCIAL_AUTH_GOOGLE_OAUTH2_KEY,
+}
