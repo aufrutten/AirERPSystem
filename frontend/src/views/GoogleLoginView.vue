@@ -15,7 +15,7 @@ onMounted(() => {
 });
 
 const sendAccessTokenToBackend = (token: string) => {
-  window.api.post("/accounts/login/social/google-oauth2", {provider_token: token})
+  window.api.put("/accounts/auth/google-oauth2", {provider_token: token})
     .then((response: AxiosResponse) => {
         account.connect_account(response.data.email, response.data.access_token, response.data.refresh_token)
         account.router.replace({name: 'home'})

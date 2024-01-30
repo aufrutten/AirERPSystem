@@ -1,15 +1,24 @@
+from datetime import timedelta
+from typing import TYPE_CHECKING
 
 from django.conf import settings
-from django.template.loader import render_to_string
-
+from django.utils import timezone
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
+from django.contrib.auth.tokens import default_token_generator
 
 import social_core.exceptions
 from social_django.utils import psa
+
 from rest_framework import serializers
 
 
+if TYPE_CHECKING:
+    from .models import User
+
+
 @psa()
-def register_by_access_token(request, backend):
+def register_by_access_token(request, backend) -> "User":
     try:
         token = request.data.get('provider_token')
         return request.backend.do_auth(token)
@@ -17,43 +26,34 @@ def register_by_access_token(request, backend):
         raise serializers.ValidationError(error)
 
 
-class RenderEmail:
-    """class for reset password and confirm email, render the html with their urls"""
+def current_time_timedelta():
+    """Return the (current time - timedelta in hours, minutes, and...)"""
+    return timezone.now() - timedelta(hours=1)
 
-    choices = {
-        'confirm': {
-            'subject': f'{settings.PROJECT_NAME} Confirm Email',
-            'html_template': 'accounts/email_confirm.html'
-        },
-        'reset': {
-            'subject': f'{settings.PROJECT_NAME} Reset Password',
-            'html_template': 'accounts/reset_password.html'
-        }
+
+def check_last_email_received(user: "User") -> bool:
+    """True if available to send new email else False. Antispam function. Delay between emails."""
+    return timezone.now() - user.last_email_received >= timedelta(hours=1)
+
+
+def get_token(user: "User") -> str:
+    """Generate each time an access token for the given user"""
+    return default_token_generator.make_token(user)
+
+
+def check_token(user: "User", token: str) -> bool:
+    """Check that the token is valid for the given user"""
+    return default_token_generator.check_token(user, token)
+
+
+def get_context(user: "User", url: str) -> dict:
+    return {
+        "user": user,
+        "HOSTS": settings.HOSTS,
+        "PROJECT_NAME": settings.PROJECT_NAME,
+        "url": url.format(
+            frontend=settings.HOSTS.frontend,
+            uid=urlsafe_base64_encode(force_bytes(user.pk)),
+            token=get_token(user)
+        ),
     }
-
-    def __init__(self, user, choice='confirm'):
-        self.user = user
-        self.choice = choice
-        self.option = self.choices[choice]
-
-    def __call__(self, *args, **kwargs):
-        context = {
-            'user': self.user,
-            'url': f"https://{settings.HOSTS.frontend}/{self.url}",
-            'subject': self.option['subject'],
-            'home_url': f'https://{settings.HOSTS.frontend}'
-        }
-        result = {
-            'message': '',
-            'subject': self.option['subject'],
-            'html_message': render_to_string(self.option['html_template'], context)
-        }
-        return result
-
-    @property
-    def url(self):
-        """getting url redirection"""
-        token = self.user.access_token
-        if self.choice == 'confirm':
-            return f'account/confirm?email={self.user}&access_token={token}'
-        return f'account/reset-password?email={self.user}&access_token={token}'

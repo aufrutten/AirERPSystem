@@ -9,42 +9,37 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import sys
 from pathlib import Path
-from os import environ
 
+from decouple import config
 from split_settings.tools import include
 
-from .hosts import Hosts
-import apps
+from .apps import import_apps
+from .components.CORS.hosts import Hosts
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-PROJECT_NAME = environ.get("PROJECT_NAME", "AufruttenProject")
+PROJECT_NAME = config("PROJECT_NAME", default="AufruttenProject")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!                                         -
-SECRET_KEY = environ.get("SECRET_KEY", "django-insecure---------it's---random----default--case-to-change---")
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(environ.get("DEBUG", False))
+DEBUG = True if "test" in sys.argv else config("DEBUG", default=False, cast=bool)
 
-HOSTS = Hosts()
+# SECURITY WARNING: keep the secret key used in production secret!                                         -
+SECRET_KEY = "TEST_SECRET_KEY" if DEBUG else config("SECRET_KEY", cast=str)
+
+HOSTS = Hosts(DEBUG)
 ALLOWED_HOSTS = [HOSTS.backend]
-CORS_ALLOWED_ORIGINS = [f"https://{HOSTS.frontend}", ]
+
+# Other CORS configuration in ./components/CORS/settings.py
+CORS_ALLOWED_ORIGINS = [f"https://{HOSTS.frontend}"]
 CSRF_TRUSTED_ORIGINS = [f"https://{HOSTS.frontend}", f"https://{HOSTS.backend}"]
 
-CORS_ALLOW_ALL_ORIGINS = False
-CORS_ALLOW_CREDENTIALS = True
-
-CSRF_USE_SESSIONS = True
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-
-CSRF_COOKIE_DOMAIN = f'.{HOSTS.frontend}'
-SESSION_COOKIE_DOMAIN = f'.{HOSTS.frontend}'
+CSRF_COOKIE_DOMAIN = f".{HOSTS.frontend}"
+SESSION_COOKIE_DOMAIN = f".{HOSTS.frontend}"
 
 # Application definition
 INSTALLED_APPS = [
@@ -72,6 +67,7 @@ INSTALLED_APPS = [
     # REST FRAMEWORK - API
     'django_filters',
     'rest_framework',
+    'rest_framework.authtoken',
     'rest_framework_simplejwt',
 
     # SWAGGER FOR API
@@ -89,7 +85,7 @@ INSTALLED_APPS = [
 ]
 
 # APPS
-INSTALLED_APPS += apps.import_apps()
+INSTALLED_APPS += import_apps()
 
 
 MIDDLEWARE = [
@@ -136,12 +132,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "HOST": environ.get("POSTGRES_HOST", "postgres-svc"),
-        "PORT": environ.get("POSTGRES_PORT", "5432"),
-        "NAME": environ.get("POSTGRES_NAME", "root"),
-        "USER": environ.get("POSTGRES_USER", "django"),
-        "PASSWORD": environ.get("POSTGRES_PASSWORD", SECRET_KEY),
-        "TEST": {"NAME": "test"}
+        "HOST": config("POSTGRES_HOST", default="postgres-svc", cast=str),
+        "PORT": config("POSTGRES_PORT", default=5432, cast=int),
+        "NAME": config("POSTGRES_NAME", default="root", cast=str),
+        "USER": config("POSTGRES_USER", default="django", cast=str),
+        "PASSWORD": config("POSTGRES_PASSWORD", default=SECRET_KEY, cast=str),
+        "TEST": {"NAME": "TEST"}
     }
 }
 
@@ -185,6 +181,7 @@ LOCALE_PATHS = [BASE_DIR / 'localization']
 STATIC_URL = 'static/'
 MEDIA_URL = 'media/'
 
+# FileStorage configuration in ./components/Cloudinary/settings.py
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_ROOT = BASE_DIR / 'uploads'
 
@@ -197,6 +194,7 @@ AGE_REMARK = {"MIN": 16, "MAX": 50}  # Old's
 
 # Other settings
 include('components/DRF/settings.py')         # Django Rest Framework Settings
+include('components/CORS/settings.py')        # Cross-origin resource sharing (CORS) Settings and ALLOWED_HOSTS
 include('components/Email/settings.py')       # Email configuration
 include('components/OAuth2/settings.py')      # Auth Settings
 include('components/Celery/settings.py')      # Celery configuration

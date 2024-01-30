@@ -16,7 +16,7 @@ const payload = ref({
 })
 
 function submit() {
-  window.api.post('/accounts/register', payload.value)
+  window.api.post('/accounts/create', payload.value)
       .then(() => {
         account.router.replace({name: 'login'})
       })
@@ -79,7 +79,7 @@ function submit() {
     </div>
   </div>
 
-  <input type="submit" value="Sing up" class="btn btn-primary w-100 mt-4 btn btn-lg rounded-3 btn-primary">
+  <input type="submit" value="Sign up" class="btn btn-primary w-100 mt-4 btn btn-lg rounded-3 btn-primary">
   <router-link :to="{name: 'forgot-password'}" class="btn btn-outline-secondary w-100 btn btn-lg rounded-3">Forgot password</router-link>
   <small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>
 </form>

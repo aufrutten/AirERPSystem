@@ -1,4 +1,3 @@
-
 from datetime import timedelta
 from django.conf import settings
 
@@ -20,13 +19,11 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 100,
 }
 
-
 # SIMPLE_JWT TOKEN
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=10),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=90)
 }
-
 
 # SWAGGER API
 SPECTACULAR_SETTINGS = {

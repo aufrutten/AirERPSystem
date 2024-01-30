@@ -9,13 +9,13 @@ const errors: any = ref(false)
 onMounted(() => {
   // Check if the URL contains an access token
   const urlParams = new URLSearchParams(window.location.search);
-  sendAccessTokenToBackend(urlParams.get('email') || '', urlParams.get('access_token') || '');
+  sendAccessTokenToBackend(urlParams.get('uid') || '', urlParams.get('token') || '');
 });
 
-const sendAccessTokenToBackend = (email: string, token: string) => {
-  window.api.post("/accounts/confirm", {email: email, access_token: token})
+const sendAccessTokenToBackend = (uid: string, token: string) => {
+  window.api.post("/accounts/confirm", {uid: uid, token: token})
     .then((response: AxiosResponse) => {
-        account.connect_account(response.data.email, response.data.access_token, response.data.refresh_token)
+        account.connect_account(response.data.uid, response.data.access_token, response.data.refresh_token)
         account.router.replace({name: 'home'})
     })
     .catch((error: AxiosError) => {
